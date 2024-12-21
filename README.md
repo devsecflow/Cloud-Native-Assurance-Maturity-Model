@@ -12,14 +12,6 @@ The Cloud Native Assurance Maturity Model (CNAMM) is a framework designed to hel
 
 ![CNAMM Framework](graphics/CNAMM_Framework.png)
 
-## Repository Contents
-
-This repository contains essential tools and documentation for implementing CNAMM:
-
-- **CNAMM Assessment Toolkit.xlsx**: Interactive assessment tool with comprehensive scoring system
-- **Documentation**: Detailed guide covering framework fundamentals and implementation
-- **Graphics**: Visual representations of the framework components
-
 ## Framework Structure
 
 CNAMM evaluates eight critical business functions, each containing three Practice Areas with two assessment Streams:
@@ -40,6 +32,8 @@ CNAMM evaluates eight critical business functions, each containing three Practic
 - **Stream A (Core)**: Essential capabilities and security controls
 - **Stream B (Advanced)**: Advanced capabilities and innovative practices
 
+![Practice Area Heatmap](graphics/24_practice_area_heatmap.png)
+
 ## Scoring System
 
 ### Raw Scores
@@ -59,6 +53,8 @@ Your organization's context affects your target security maturity level through 
 - Organizational Scale
 - Cloud Native Maturity
 
+![Radar Chart and Bar Graph](graphics/radar_chart_and_bar_graph.png)
+
 ## Assessment Toolkit Features
 
 ### Scorecard Overview
@@ -66,18 +62,17 @@ Your organization's context affects your target security maturity level through 
 - Overall Maturity Score and Level
 - Assessment Completion Status
 - Business Function Scoring Summary
-- Comprehensive Visualizations:
-  - Radar Chart
-  - Bar Graph
-  - Maturity Distribution
-  - Practice Area Heatmap
+- Comprehensive Visualizations
 
-### Key Insights
+![Maturity Distribution](graphics/pie_chart.png)
 
-- Organizational Strengths
-- Areas for Improvement
-- Profile-Based Insights
-- Contextual Recommendations
+## Repository Contents
+
+This repository contains essential tools and documentation for implementing CNAMM:
+
+- **CNAMM Assessment Toolkit.xlsx**: Interactive assessment tool with comprehensive scoring system
+- **Documentation**: Detailed guide covering framework fundamentals and implementation
+- **Graphics**: Visual representations of the framework components
 
 ## Getting Started
 
