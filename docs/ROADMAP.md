@@ -6,7 +6,7 @@ This document outlines the planned development and community growth for CNAMM. O
 
 - Framework with 8 business functions and 24 practice areas
 - Assessment toolkit with automated scoring
-- Basic documentation
+- Complete documentation
 - Visualization dashboards
 
 ## Q1-Q2 2025: Foundation Building
@@ -14,7 +14,6 @@ This document outlines the planned development and community growth for CNAMM. O
 ### Community Development
 
 - Establish monthly community meetings
-- Create contribution guidelines
 - Set up communication channels (Slack, mailing list)
 - Begin regular office hours for adopters
 
@@ -37,7 +36,6 @@ This document outlines the planned development and community growth for CNAMM. O
 ### Framework Development
 
 - Add industry-specific guidance
-- Build automated assessment tooling
 - Implement integration APIs
 - Create benchmarking capabilities
 
