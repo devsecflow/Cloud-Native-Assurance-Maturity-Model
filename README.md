@@ -10,13 +10,13 @@ Our mission is to provide organizations with an effective and measurable way to 
 
 The Cloud Native Assurance Maturity Model (CNAMM) is a framework designed to help organizations measure and improve their Cloud Native security and assurance capabilities. This toolkit provides a structured approach to assess your organization's current maturity level and identify areas for improvement.
 
-![CNAMM Framework](graphics/CNAMM_Framework.png)
+![CNAMM Framework](https://raw.githubusercontent.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/main/graphics/CNAMM_Framework.png)
 
 ## Interactive Resources
 
-- **Quick Assessment**: [Take our 8-question quick assessment](https://devsecflow.github.io/cnamm/#quick-assessment) to get an immediate overview of your Cloud Native security maturity
-- **Sample Assessment**: View a [completed assessment](https://github.com/devsecflow/cnamm/releases/latest/download/Sample-Assessment.xlsx) with scorecard visualization
-- **Full Toolkit**: Download the [comprehensive assessment toolkit](https://github.com/devsecflow/cnamm/releases/latest)
+- **Quick Assessment**: Take our 8-question quick assessment to get an immediate overview of your Cloud Native security maturity
+- **Sample Assessment**: View a [completed assessment](https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/raw/main/Sample%20Assessment.xlsx) with scorecard visualization
+- **Full Toolkit**: Download the [comprehensive assessment toolkit](https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/raw/main/CNAMM%20Assessment%20Toolkit%20v1.1.xlsx)
 
 ## Framework Structure
 
@@ -38,7 +38,7 @@ CNAMM evaluates eight critical business functions, each containing three Practic
 - **Stream A (Core)**: Essential capabilities and security controls
 - **Stream B (Advanced)**: Advanced capabilities and innovative practices
 
-![Practice Area Heatmap](graphics/24_practice_area_heatmap.png)
+![Practice Area Heatmap](https://raw.githubusercontent.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/main/graphics/24_practice_area_heatmap.png)
 
 ## Scoring System
 
@@ -59,7 +59,7 @@ Your organization's context affects your target security maturity level through 
 - Organizational Scale
 - Cloud Native Maturity
 
-![Radar Chart and Bar Graph](graphics/radar_chart_and_bar_graph.png)
+![Radar Chart and Bar Graph](https://raw.githubusercontent.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/main/graphics/radar_chart_and_bar_graph.png)
 
 ## Assessment Toolkit Features
 
@@ -70,20 +70,20 @@ Your organization's context affects your target security maturity level through 
 - Business Function Scoring Summary
 - Comprehensive Visualizations
 
-![Maturity Distribution](graphics/pie_chart.png)
+![Maturity Distribution](https://raw.githubusercontent.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/main/graphics/pie_chart.png)
 
 ## Repository Contents
 
 This repository contains essential tools and documentation for implementing CNAMM:
 
-- **CNAMM Assessment Toolkit.xlsx**: Interactive assessment tool with comprehensive scoring system
-- **Documentation**: Detailed guide covering framework fundamentals and implementation
-- **Graphics**: Visual representations of the framework components
+- **CNAMM Assessment Toolkit v1.1.xlsx**: Interactive assessment tool with comprehensive scoring system
+- **CNAMM-Framework-Documentation-v1.1.pdf**: Detailed guide covering framework fundamentals and implementation
+- **Sample Assessment.xlsx**: Example of a completed assessment with visualizations
 
 ## Getting Started
 
 1. **Download the Assessment Toolkit**
-   - Open `CNAMM Assessment Toolkit.xlsx`
+   - Open `CNAMM Assessment Toolkit v1.1.xlsx`
    - Navigate to the Intro tab
 
 2. **Complete Organization Profile**
@@ -126,4 +126,4 @@ For questions or support:
 This work is licensed under the Creative Commons Attribution-Share Alike 4.0 License. To view a copy of this license, visit <http://creativecommons.org/licenses/by-sa/4.0/legalcode>
 
 ---
-© 2024 DevSecFlow Community. All Rights Reserved.
+© 2025 DevSecFlow Community. All Rights Reserved.
