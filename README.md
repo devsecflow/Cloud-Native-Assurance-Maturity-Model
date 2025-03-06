@@ -12,6 +12,12 @@ The Cloud Native Assurance Maturity Model (CNAMM) is a framework designed to hel
 
 ![CNAMM Framework](graphics/CNAMM_Framework.png)
 
+## Interactive Resources
+
+- **Quick Assessment**: [Take our 8-question quick assessment](https://devsecflow.github.io/cnamm/#quick-assessment) to get an immediate overview of your Cloud Native security maturity
+- **Sample Assessment**: View a [completed assessment](https://github.com/devsecflow/cnamm/releases/latest/download/Sample-Assessment.xlsx) with scorecard visualization
+- **Full Toolkit**: Download the [comprehensive assessment toolkit](https://github.com/devsecflow/cnamm/releases/latest)
+
 ## Framework Structure
 
 CNAMM evaluates eight critical business functions, each containing three Practice Areas with two assessment Streams:

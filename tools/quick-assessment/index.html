@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNAMM Quick Assessment</title>
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --secondary: #4caf50;
+            --background: #f9f9f9;
+            --card: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary);
+        }
+        
+        .assessment-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .assessment-card {
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .question-section {
+            display: none;
+        }
+        
+        .question-section.active {
+            display: block;
+        }
+        
+        .question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .option {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background-color: rgba(30, 136, 229, 0.1);
+        }
+        
+        .option.selected {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+        
+        button:hover {
+            background-color: #1565c0;
+        }
+        
+        button:disabled {
+            background-color: #bbdefb;
+            cursor: not-allowed;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .results-card {
+            display: none;
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
+        .results-heading {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .score-overview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .score-label {
+            font-size: 0.9rem;
+            color: #757575;
+        }
+        
+        .function-scores {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .function-score {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .function-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .function-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .function-progress {
+            height: 100%;
+            background-color: var(--primary);
+        }
+        
+        .next-steps {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .cta-button {
+            background-color: var(--secondary);
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="assessment-intro">
+            <h1>CNAMM Quick Assessment</h1>
+            <p>Evaluate your Cloud Native security maturity in just 8 questions. This quick assessment will give you an overview of your organization's current state and identify key areas for improvement.</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+        </div>
+        
+        <div class="assessment-card" id="assessment-container">
+            <!-- Question 1: Strategy and Risk Governance -->
+            <div class="question-section active" data-section="1">
+                <h2>1. Strategy and Risk Governance</h2>
+                <div class="question">
+                    <p>How would you describe your organization's Cloud Native security strategy?</p>
+                    <div class="options">
+                        <div class="option" data-value="1">No formal Cloud Native security strategy exists</div>
+                        <div class="option" data-value="2">Basic security strategy that covers some Cloud Native aspects</div>
+                        <div class="option" data-value="3">Documented strategy with clear security goals and metrics</div>
+                        <div class="option" data-value="4">Comprehensive strategy with executive support and continuous improvement</div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button disabled>Previous</button>
+                    <button id="next-1">Next</button>
+                </div>
+            </div>
+            
+            <!-- Question 2: Supply Chain and Vendor Security -->
+            <div class="question-section" data-section="2">
+                <h2>2. Supply Chain and Vendor Security</h2>
+                <div class="question">
+                    <p>How does your organization secure its software supply chain?</p>
+                    <div class="options">
+                        <div class="option" data-value="1">No specific supply chain security controls</div>
+                        <div class="option" data-value="2">Basic dependency scanning and vendor assessments</div>
+                        <div class="option" data-value="3">Comprehensive supply chain security with SBOM and artifact verification</div>
+                        <div class="option" data-value="4">Advanced supply chain security with continuous monitoring and automated validation</div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button id="prev-2">Previous</button>
+                    <button id="next-2">Next</button>
+                </div>
+            </div>
+            
+            <!-- Question 3: Infrastructure and Platform Security -->
+            <div class="question-section" data-section="3">
+                <h2>3. Infrastructure and Platform Security</h2>
+                <div class="question">
+                    <p>How mature is your cloud infrastructure security posture management?</p>
+                    <div class="options">
+                        <div class="option" data-value="1">No automated security posture assessment</div>
+                        <div class="option" data-value="2">Basic cloud security scanning and monitoring</div>
+                        <div class="option" data-value="3">Automated posture assessment with policy enforcement</div>
+                        <div class="option" data-value="4">Comprehensive real-time posture management with automated remediation</div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button id="prev-3">Previous</button>
+                    <button id="next-3">Next</button>
+                </div>
+            </div>
+            
+            <!-- Question 4: Application and Data Protection -->
+            <div class="question-section" data-section="4">
+                <h2>4. Application and Data Protection</h2>
+                <div class="question">
+                    <p>How would you describe your Cloud Native application security practices?</p>
+                    <div class="options">
+                        <div class="option" data-value="1">No Cloud Native specific application security controls</div>
+                        <div class="option" data-value="2">Basic application security with some Cloud Native considerations</div>
+                        <div class="option" data-value="3">Dedicated Cloud Native application security with automated testing</div>
+                        <div class="option" data-value="4">Comprehensive security mesh with automated policy enforcement and real-time monitoring</div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button id="prev-4">Previous</button>
+                    <button id="next-4">Next</button>
+                </div>
+            </div>
+            
+            <!-- Question 5: Identity and Access Governance -->
+            <div class="question-section" data-section="5">
+                <h2>5. Identity and Access Governance</h2>
+                <div class="question">
+                    <p>How do you manage identity and access in your Cloud Native environment?</p>
+                    <div class="options">
+                        <div class="option" data-value="1">Basic identity management without Cloud Native specifics</div>
+                        <div class="option" data-value="2">Identity management with some Cloud Native considerations</div>
+                        <div class="option" data-value="3">Advanced identity orchestration with automated lifecycle management</div>
+                        <div class="option" data-value="4">Zero-trust identity framework with automated verification and continuous monitoring</div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button id="prev-5">Previous</button>
+                    <button id="next-5">Next</button>
+                </div>
+            </div>
+            
+            <!-- Question 6: Runtime Security Operations -->
+            <div class="question-section" data-section="6">
+                <h2>6. Runtime Security Operations</h2>
+                <div class="question">
+                    <p>How do you secure container workloads at runtime?</p>
+                    <div class="options">
+                        <div class="option" data-value="1">No container-specific runtime security</div>
+                        <div class="option" data-value="2">Basic container monitoring and vulnerability scanning</div>
+                        <div class="option" data-value="3">Advanced runtime protection with behavioral analysis</div>
+                        <div class="option" data-value="4">Comprehensive runtime security with automated threat response</div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button id="prev-6">Previous</button>
+                    <button id="next-6">Next</button>
+                </div>
+            </div>
+            
+            <!-- Question 7: Threat Detection and Response -->
+            <div class="question-section" data-section="7">
+                <h2>7. Threat Detection and Response</h2>
+                <div class="question">
+                    <p>How does your organization detect and respond to threats in Cloud Native environments?</p>
+                    <div class="options">
+                        <div class="option" data-value="1">No Cloud Native specific threat detection</div>
+                        <div class="option" data-value="2">Basic monitoring with manual investigation</div>
+                        <div class="option" data-value="3">Advanced threat detection with some automated response</div>
+                        <div class="option" data-value="4">Comprehensive threat analytics with ML-based detection and automated response</div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button id="prev-7">Previous</button>
+                    <button id="next-7">Next</button>
+                </div>
+            </div>
+            
+            <!-- Question 8: Resilience and Service Assurance -->
+            <div class="question-section" data-section="8">
+                <h2>8. Resilience and Service Assurance</h2>
+                <div class="question">
+                    <p>How do you ensure reliable and secure software delivery?</p>
+                    <div class="options">
+                        <div class="option" data-value="1">No formal delivery safety measures</div>
+                        <div class="option" data-value="2">Basic deployment checks and rollback capability</div>
+                        <div class="option" data-value="3">Advanced deployment controls with automated verification</div>
+                        <div class="option" data-value="4">Comprehensive deployment safety with progressive delivery and impact controls</div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button id="prev-8">Previous</button>
+                    <button id="submit-assessment">Submit Assessment</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        <div class="results-card" id="results-container">
+            <div class="results-heading">
+                <h2>Your CNAMM Quick Assessment Results</h2>
+                <p>Based on your responses, here's an overview of your Cloud Native security maturity</p>
+            </div>
+            
+            <div class="score-overview">
+                <div class="score-circle">
+                    <div class="score-value" id="overall-score">0.0</div>
+                    <div class="score-label">Overall Maturity</div>
+                </div>
+            </div>
+            
+            <h3>Business Function Breakdown</h3>
+            <div class="function-scores" id="function-scores">
+                <!-- Will be populated with JavaScript -->
+            </div>
+            
+            <div class="next-steps">
+                <h3>Recommended Next Steps</h3>
+                <p id="recommendation-text">Based on your assessment, we recommend focusing on improving your foundational capabilities.</p>
+                <p>To get a comprehensive assessment and detailed improvement roadmap:</p>
+                <a href="https://github.com/devsecflow/cnamm/releases/latest" class="cta-button">Download the Full CNAMM Toolkit</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Variables to track state
+            let currentSection = 1;
+            const totalSections = 8;
+            const answers = {};
+            
+            // Update progress bar
+            function updateProgress() {
+                const progressPercent = ((currentSection - 1) / totalSections) * 100;
+                document.getElementById('progress-bar').style.width = progressPercent + '%';
+            }
+            
+            // Navigate to next section
+            function goToNextSection() {
+                // Hide current section
+                const currentElement = document.querySelector(`.question-section[data-section="${currentSection}"]`);
+                currentElement.classList.remove('active');
+                
+                // Show next section
+                currentSection++;
+                const nextElement = document.querySelector(`.question-section[data-section="${currentSection}"]`);
+                nextElement.classList.add('active');
+                
+                // Update progress
+                updateProgress();
+            }
+            
+            // Navigate to previous section
+            function goToPrevSection() {
+                // Hide current section
+                const currentElement = document.querySelector(`.question-section[data-section="${currentSection}"]`);
+                currentElement.classList.remove('active');
+                
+                // Show previous section
+                currentSection--;
+                const prevElement = document.querySelector(`.question-section[data-section="${currentSection}"]`);
+                prevElement.classList.add('active');
+                
+                // Update progress
+                updateProgress();
+            }
+            
+            // Option selection
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Get parent section
+                    const section = this.closest('.question-section');
+                    const sectionNumber = parseInt(section.dataset.section);
+                    
+                    // Deselect all options in this section
+                    section.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Select this option
+                    this.classList.add('selected');
+                    
+                    // Store answer
+                    answers[sectionNumber] = parseInt(this.dataset.value);
+                    
+                    // Enable next button if it exists
+                    const nextButton = document.getElementById(`next-${sectionNumber}`);
+                    if (nextButton) {
+                        nextButton.removeAttribute('disabled');
+                    }
+                    
+                    // Enable submit button if it's the last section
+                    if (sectionNumber === totalSections) {
+                        document.getElementById('submit-assessment').removeAttribute('disabled');
+                    }
+                });
+            });
+            
+            // Next button handlers
+            for (let i = 1; i < totalSections; i++) {
+                document.getElementById(`next-${i}`).addEventListener('click', goToNextSection);
+            }
+            
+            // Previous button handlers
+            for (let i = 2; i <= totalSections; i++) {
+                document.getElementById(`prev-${i}`).addEventListener('click', goToPrevSection);
+            }
+            
+            // Submit assessment
+            document.getElementById('submit-assessment').addEventListener('click', function() {
+                // Calculate scores
+                let totalScore = 0;
+                const functionScores = {};
+                
+                // Calculate individual function scores
+                for (let i = 1; i <= totalSections; i++) {
+                    const score = answers[i] || 1; // Default to 1 if unanswered
+                    functionScores[i] = score;
+                    totalScore += score;
+                }
+                
+                // Calculate overall maturity (1-4 scale)
+                const overallMaturity = (totalScore / totalSections).toFixed(1);
+                
+                // Display overall score
+                document.getElementById('overall-score').textContent = overallMaturity;
+                
+                // Generate function score elements
+                const functionScoresContainer = document.getElementById('function-scores');
+                functionScoresContainer.innerHTML = '';
+                
+                const functionNames = [
+                    'Strategy and Risk Governance',
+                    'Supply Chain and Vendor Security',
+                    'Infrastructure and Platform Security',
+                    'Application and Data Protection',
+                    'Identity and Access Governance',
+                    'Runtime Security Operations',
+                    'Threat Detection and Response',
+                    'Resilience and Service Assurance'
+                ];
+                
+                for (let i = 1; i <= totalSections; i++) {
+                    const score = functionScores[i];
+                    const scorePercentage = (score / 4) * 100;
+                    
+                    const functionElement = document.createElement('div');
+                    functionElement.className = 'function-score';
+                    functionElement.innerHTML = `
+                        <div class="function-name">${functionNames[i-1]}</div>
+                        <div class="function-bar">
+                            <div class="function-progress" style="width: ${scorePercentage}%"></div>
+                        </div>
+                        <div class="function-value">${score} / 4</div>
+                    `;
+                    
+                    functionScoresContainer.appendChild(functionElement);
+                }
+                
+                // Set recommendation text based on overall score
+                const recommendationText = document.getElementById('recommendation-text');
+                if (overallMaturity < 2) {
+                    recommendationText.textContent = 'Based on your assessment, we recommend focusing on establishing foundational Cloud Native security controls and developing a formal strategy.';
+                } else if (overallMaturity < 3) {
+                    recommendationText.textContent = 'Based on your assessment, we recommend standardizing your Cloud Native security practices and implementing more automated controls.';
+                } else if (overallMaturity < 3.5) {
+                    recommendationText.textContent = 'Based on your assessment, we recommend optimizing your existing security controls and focusing on advanced automation.';
+                } else {
+                    recommendationText.textContent = 'Based on your assessment, you have a strong Cloud Native security foundation. Focus on innovation and leading-edge practices to stay ahead.';
+                }
+                
+                // Hide assessment, show results
+                document.getElementById('assessment-container').style.display = 'none';
+                document.getElementById('results-container').style.display = 'block';
+                document.getElementById('progress-bar').style.width = '100%';
+            });
+            
+            // Initialize progress bar
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
