@@ -1,6 +1,11 @@
 # Cloud Native Assurance Maturity Model (CNAMM)
 
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![Website](https://img.shields.io/badge/Website-Visit%20Now-blue)](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/)
+
+## 🌟 [Checkout Our Git Site](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/)
+
+For the best experience with CNAMM, please visit our [interactive website](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/) where you can explore the framework, take a quick assessment, and access all resources in a user-friendly interface.
 
 ## Our Mission
 
@@ -14,9 +19,10 @@ The Cloud Native Assurance Maturity Model (CNAMM) is a framework designed to hel
 
 ## Interactive Resources
 
-- **Quick Assessment**: [Take our 8-question quick assessment](https://devsecflow.github.io/cnamm/#quick-assessment) to get an immediate overview of your Cloud Native security maturity
-- **Sample Assessment**: View a [completed assessment](tools/full-assessment/Sample-Assessment.xlsx) with scorecard visualization
-- **Full Toolkit**: Download the [comprehensive assessment toolkit](tools/full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx)
+- **[Interactive Website](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/)**: Explore the framework, take the quick assessment, and access all resources
+- **[Quick Assessment](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/#assessment)**: Get an immediate overview of your Cloud Native security maturity in minutes
+- **[Sample Assessment](tools/full-assessment/Sample-Assessment.xlsx)**: View a completed assessment with scorecard visualization
+- **[Full Toolkit](tools/full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx)**: Download the comprehensive assessment toolkit
 
 ## Framework Structure
 
@@ -82,20 +88,22 @@ This repository contains essential tools and documentation for implementing CNAM
 
 ## Getting Started
 
-1. **Download the Assessment Toolkit**
+1. **[Visit our interactive website](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/)** for the most user-friendly experience
+
+2. **Download the Assessment Toolkit**
    - Open the [CNAMM Assessment Toolkit](tools/full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx)
    - Navigate to the Intro tab
 
-2. **Complete Organization Profile**
+3. **Complete Organization Profile**
    - Define your context
    - Understand your target maturity
 
-3. **Conduct Assessment**
+4. **Conduct Assessment**
    - Evaluate each business function
    - Document evidence
    - Review scores and insights
 
-4. **Plan Improvements**
+5. **Plan Improvements**
    - Identify gaps
    - Prioritize enhancements
    - Track progress
@@ -114,7 +122,7 @@ We welcome community contributions to improve CNAMM:
 For questions or support:
 
 - Email: <info@devsecflow.com>
-- [Submit issues](https://github.com/devsecflow/cnamm/issues) through GitHub
+- [Submit issues](https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/issues) through GitHub
 - Join community discussions
 
 ## Created By
