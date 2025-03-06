@@ -6,8 +6,13 @@
     <title>CNAMM Quick Assessment</title>
     <style>
         :root {
-            --primary: #1e88e5;
-            --secondary: #4caf50;
+            /* Match main site's more subdued colors */
+            --primary: #2c6fad;
+            --primary-light: #6095c9;
+            --primary-dark: #1a4971;
+            --secondary: #5b9a6f;
+            --secondary-light: #80b594;
+            --secondary-dark: #40704f;
             --background: #f9f9f9;
             --card: #ffffff;
             --text: #333333;
@@ -73,7 +78,7 @@
         }
         
         .option:hover {
-            background-color: rgba(30, 136, 229, 0.1);
+            background-color: rgba(44, 111, 173, 0.1);
         }
         
         .option.selected {
@@ -99,7 +104,7 @@
         }
         
         button:hover {
-            background-color: #1565c0;
+            background-color: var(--primary-dark);
         }
         
         button:disabled {
@@ -205,14 +210,31 @@
         
         .cta-button {
             background-color: var(--secondary);
+            color: white;
             padding: 1rem 2rem;
             font-size: 1.1rem;
             margin-top: 1rem;
             display: inline-block;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
         }
         
         .cta-button:hover {
-            background-color: #388e3c;
+            background-color: var(--secondary-dark);
+        }
+        
+        .return-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .return-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -221,6 +243,7 @@
         <div class="assessment-intro">
             <h1>CNAMM Quick Assessment</h1>
             <p>Evaluate your Cloud Native security maturity in just 8 questions. This quick assessment will give you an overview of your organization's current state and identify key areas for improvement.</p>
+            <a href="../../" class="return-link">← Return to CNAMM Home</a>
         </div>
         
         <div class="progress-bar">
@@ -396,7 +419,8 @@
                 <h3>Recommended Next Steps</h3>
                 <p id="recommendation-text">Based on your assessment, we recommend focusing on improving your foundational capabilities.</p>
                 <p>To get a comprehensive assessment and detailed improvement roadmap:</p>
-                <a href="https://github.com/devsecflow/cnamm/releases/latest" class="cta-button">Download the Full CNAMM Toolkit</a>
+                <a href="../full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx" class="cta-button" download>Download Full CNAMM Toolkit</a>
+                <a href="../../" class="return-link" style="margin-top: 2rem;">← Return to CNAMM Home</a>
             </div>
         </div>
     </div>
