@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #2962ff;
-            --primary-light: #768fff;
-            --primary-dark: #0039cb;
-            --secondary: #4caf50;
-            --secondary-light: #80e27e;
-            --secondary-dark: #087f23;
+            /* More subdued, business-friendly color palette */
+            --primary: #2c6fad;
+            --primary-light: #6095c9;
+            --primary-dark: #1a4971;
+            --secondary: #5b9a6f;
+            --secondary-light: #80b594;
+            --secondary-dark: #40704f;
             --text: #333333;
             --text-light: #757575;
             --background: #f9fafb;
@@ -183,7 +184,7 @@
         
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
         
@@ -426,6 +427,10 @@
             .hero p {
                 font-size: 1.1rem;
             }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -460,8 +465,8 @@
             <h1>Cloud Native Assurance Maturity Model</h1>
             <p>A comprehensive framework for measuring and improving your Cloud Native security capabilities across 8 critical business functions</p>
             <div class="cta-buttons">
-                <a href="#quick-assessment" class="btn btn-primary">Take Quick Assessment</a>
-                <a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/releases/latest" class="btn btn-secondary">Download Toolkit</a>
+                <a href="tools/quick-assessment/index.html" class="btn btn-primary">Take Quick Assessment</a>
+                <a href="tools/full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx" class="btn btn-secondary" download>Download Toolkit</a>
             </div>
         </div>
     </section>
@@ -490,15 +495,6 @@
                     <div class="feature-content">
                         <h3>Evidence-Based Assessment</h3>
                         <p>Concrete validation of security capabilities through measurable evidence, not just paper policies</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <div class="feature-content">
-                        <h3>Automation Emphasis</h3>
-                        <p>Focus on automated controls and continuous validation to enable efficient and scalable security</p>
                     </div>
                 </div>
                 <div class="feature-card">
@@ -553,11 +549,14 @@
         <div class="container">
             <div class="section-title">
                 <h2>Quick Assessment</h2>
-                <p>Get a quick overview of your Cloud Native security maturity with 8 key questions</p>
+                <p>Get a quick overview of your Cloud Native security maturity with these 8 key questions, one for each business function</p>
             </div>
-            <!-- Assessment questions will go here -->
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/releases/latest" class="btn btn-primary">Take Full Assessment</a>
+            <div style="text-align: center; margin: 2rem 0;">
+                <p>Our interactive assessment will help you understand your organization's current Cloud Native security maturity level across all 8 business functions.</p>
+                <p>This simple 8-question assessment takes just 5 minutes to complete and provides immediate results with recommendations.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="tools/quick-assessment/index.html" class="btn btn-primary">Start Quick Assessment</a>
+                </div>
             </div>
         </div>
     </section>
@@ -577,7 +576,7 @@
                     <div class="resource-content">
                         <h3>Official Documentation</h3>
                         <p>Comprehensive guide to the CNAMM framework, methodology, and implementation</p>
-                        <a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/raw/main/Official%20Documentation.pdf" class="btn btn-primary" style="margin-top: 1rem;">Download</a>
+                        <a href="CNAMM-Framework-Documentation-v1.1.pdf" class="btn btn-primary" style="margin-top: 1rem;" download>Download</a>
                     </div>
                 </div>
                 <div class="resource-card">
@@ -587,7 +586,7 @@
                     <div class="resource-content">
                         <h3>Assessment Toolkit</h3>
                         <p>Interactive Excel-based toolkit for conducting comprehensive assessments</p>
-                        <a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/releases/latest" class="btn btn-primary" style="margin-top: 1rem;">Download</a>
+                        <a href="tools/full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx" class="btn btn-primary" style="margin-top: 1rem;" download>Download</a>
                     </div>
                 </div>
                 <div class="resource-card">
@@ -619,7 +618,7 @@
                     <div class="feature-content">
                         <h3>Contribute</h3>
                         <p>Help improve the framework by contributing new features, documentation, or bug fixes</p>
-                        <a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/blob/main/CODE_OF_CONDUCT.md" class="btn btn-primary" style="margin-top: 1rem;">Learn How</a>
+                        <a href="docs/community/CONTRIBUTING.md" class="btn btn-primary" style="margin-top: 1rem;">Learn How</a>
                     </div>
                 </div>
                 <div class="feature-card">
@@ -662,17 +661,17 @@
                 <div class="footer-links">
                     <h3>Resources</h3>
                     <ul>
-                        <li><a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/raw/main/Official%20Documentation.pdf">Documentation</a></li>
-                        <li><a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/releases/latest">Assessment Toolkit</a></li>
-                        <li><a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/blob/main/ROADMAP.md">Roadmap</a></li>
+                        <li><a href="CNAMM-Framework-Documentation-v1.1.pdf" download>Documentation</a></li>
+                        <li><a href="tools/full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx" download>Assessment Toolkit</a></li>
+                        <li><a href="ROADMAP.md">Roadmap</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h3>Community</h3>
                     <ul>
                         <li><a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model">GitHub Repository</a></li>
-                        <li><a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/blob/main/CONTRIBUTING.md">Contributing</a></li>
-                        <li><a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a></li>
+                        <li><a href="docs/community/CONTRIBUTING.md">Contributing</a></li>
+                        <li><a href="CODE_OF_CONDUCT.md">Code of Conduct</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
