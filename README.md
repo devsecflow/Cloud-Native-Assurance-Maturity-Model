@@ -3,7 +3,7 @@
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 [![Website](https://img.shields.io/badge/Website-Visit%20Now-blue)](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/)
 
-## 🌟 [Checkout Our Git Site](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/)
+## 🌟 [Check out Our Git Site](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/)
 
 For the best experience with CNAMM, please visit our [interactive website](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/) where you can explore the framework, take a quick assessment, and access all resources in a user-friendly interface.
 
