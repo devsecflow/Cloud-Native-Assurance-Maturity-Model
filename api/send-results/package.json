@@ -1,0 +1,11 @@
+{
+  "name": "cnamm-email-handler",
+  "version": "1.0.0",
+  "description": "Serverless function to handle CNAMM assessment email delivery",
+  "main": "index.js",
+  "dependencies": {
+    "nodemailer": "^6.9.1"
+  },
+  "author": "DevSecFlow",
+  "license": "MIT"
+}

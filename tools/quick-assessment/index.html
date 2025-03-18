@@ -719,6 +719,22 @@
                 </div>
             </div>
             
+            <div class="email-results" style="background-color: var(--card); border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin: 2rem 0; text-align: center;">
+                <h3 style="margin-bottom: 1rem;">Save Your Results</h3>
+                <p>Would you like to receive a beautifully formatted copy of your assessment results by email?</p>
+                <form id="email-form" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; max-width: 400px; margin-left: auto; margin-right: auto;">
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="text" id="name-input" placeholder="Your Name (Optional)" style="flex: 1; padding: 0.75rem; border: 1px solid var(--border); border-radius: 4px; outline: none; font-family: inherit;">
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="email" id="email-input" placeholder="Your Email Address" required style="flex: 1; padding: 0.75rem; border: 1px solid var(--border); border-radius: 4px; outline: none; font-family: inherit;">
+                        <button type="submit" id="send-results" style="background-color: var(--secondary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold; white-space: nowrap;">Send Results</button>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem;">We respect your privacy. Your email will only be used to send you these results.</p>
+                    <div id="email-status" style="display: none; margin-top: 1rem;"></div>
+                </form>
+            </div>
+            
             <div class="next-steps">
                 <h3>Recommended Next Steps</h3>
                 <p id="recommendation-text">Based on your assessment, we recommend focusing on improving your foundational capabilities.</p>
@@ -1040,6 +1056,25 @@
                 };
                 saveAssessmentResults(assessmentResults);
                 
+                // Store assessment data globally for email submission
+                window.assessmentData = {
+                    overallMaturity: overallMaturity,
+                    functionScores: functionScores,
+                    maturityLevels: Object.values(answers),
+                    businessFunctions: {
+                        1: { name: 'Strategy and Risk Governance', questions: [1, 2, 3] },
+                        2: { name: 'Supply Chain and Vendor Security', questions: [4, 5, 6] },
+                        3: { name: 'Infrastructure and Platform Security', questions: [7, 8, 9] },
+                        4: { name: 'Application and Data Protection', questions: [10, 11, 12] },
+                        5: { name: 'Identity and Access Governance', questions: [13, 14, 15] },
+                        6: { name: 'Runtime Security Operations', questions: [16, 17, 18] },
+                        7: { name: 'Threat Detection and Response', questions: [19, 20, 21] },
+                        8: { name: 'Resilience and Service Assurance', questions: [22, 23, 24] }
+                    },
+                    timestamp: new Date().toLocaleDateString(),
+                    functionNames: functionNames
+                };
+                
                 // Add data collection acknowledgment
                 const dataCollectionNote = document.createElement('p');
                 dataCollectionNote.textContent = 'Thank you! Your anonymous assessment data has been collected to help improve the CNAMM framework.';
@@ -1057,6 +1092,291 @@
             
             // Initialize progress bar
             updateProgress();
+            
+            // Email results form handling
+            document.getElementById('email-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email-input').value;
+                const name = document.getElementById('name-input').value || 'User';
+                const statusDiv = document.getElementById('email-status');
+                
+                // Show loading message
+                statusDiv.style.display = 'block';
+                statusDiv.innerHTML = '<p style="color: var(--primary);">Sending your results...</p>';
+                
+                // Generate HTML email content
+                const emailHtml = generateEmailHtml(name);
+                
+                // Send via our API endpoint
+                fetch('/api/send-results', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        name: name,
+                        assessmentResults: window.assessmentData,
+                        htmlContent: emailHtml
+                    })
+                })
+                .then(response => response.json())
+                .then(function() {
+                    statusDiv.innerHTML = '<p style="color: var(--secondary);">Success! Your assessment results have been sent to your email.</p>';
+                    document.getElementById('email-input').value = '';
+                    document.getElementById('name-input').value = '';
+                    
+                    // Hide the form after successful submission
+                    setTimeout(() => {
+                        document.getElementById('email-form').style.display = 'none';
+                        statusDiv.innerHTML += '<p>You can now close this message.</p>';
+                    }, 3000);
+                })
+                .catch(function(error) {
+                    console.error("Email sending failed:", error);
+                    statusDiv.innerHTML = '<p style="color: #e53935;">Sorry, we couldn\'t send your results. Please try again later.</p>';
+                });
+            });
+            
+            // Function to generate nicely formatted HTML email
+            function generateEmailHtml(name) {
+                const data = window.assessmentData;
+                const scoreColorClass = getScoreColorClass(parseFloat(data.overallMaturity));
+                
+                // Convert function scores to sorted array for display
+                const sortedFunctions = Object.entries(data.functionScores).map(([id, score]) => {
+                    return {
+                        id: parseInt(id),
+                        name: data.businessFunctions[id].name,
+                        score: score
+                    };
+                }).sort((a, b) => b.score - a.score); // Sort by score (highest first)
+                
+                // Start building HTML email template
+                let html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Your CNAMM Assessment Results</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            max-width: 800px;
+                            margin: 0 auto;
+                            padding: 20px;
+                        }
+                        .header {
+                            background-color: #2c6fad;
+                            color: white;
+                            padding: 20px;
+                            text-align: center;
+                            border-radius: 8px 8px 0 0;
+                        }
+                        .content {
+                            padding: 20px;
+                            background-color: #f9f9f9;
+                            border: 1px solid #ddd;
+                        }
+                        .footer {
+                            text-align: center;
+                            margin-top: 30px;
+                            font-size: 0.9em;
+                            color: #777;
+                        }
+                        .score-card {
+                            background-color: white;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                            padding: 20px;
+                            margin: 20px 0;
+                        }
+                        .overall-score {
+                            font-size: 48px;
+                            font-weight: bold;
+                            text-align: center;
+                        }
+                        .score-1 { color: #e53935; }
+                        .score-2 { color: #fb8c00; }
+                        .score-3 { color: #43a047; }
+                        .score-4 { color: #1e88e5; }
+                        .function-score {
+                            margin: 15px 0;
+                            padding: 10px;
+                            background-color: #f5f5f5;
+                            border-radius: 4px;
+                        }
+                        .function-name {
+                            font-weight: bold;
+                            margin-bottom: 5px;
+                        }
+                        .function-bar {
+                            height: 10px;
+                            background-color: #ddd;
+                            border-radius: 5px;
+                            margin-bottom: 5px;
+                            overflow: hidden;
+                        }
+                        .function-progress {
+                            height: 100%;
+                            background-color: #2c6fad;
+                        }
+                        .recommendation {
+                            margin: 30px 0;
+                            padding: 15px;
+                            background-color: #e8f5e9;
+                            border-left: 5px solid #2c6fad;
+                            border-radius: 4px;
+                        }
+                        .btn {
+                            display: inline-block;
+                            padding: 10px 20px;
+                            background-color: #5b9a6f;
+                            color: white;
+                            text-decoration: none;
+                            border-radius: 4px;
+                            font-weight: bold;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin: 20px 0;
+                        }
+                        th, td {
+                            border: 1px solid #ddd;
+                            padding: 12px;
+                            text-align: left;
+                        }
+                        th {
+                            background-color: #f2f2f2;
+                        }
+                        tr:nth-child(even) {
+                            background-color: #f9f9f9;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Your CNAMM Assessment Results</h1>
+                        <p>Cloud Native Assurance Maturity Model</p>
+                    </div>
+                    
+                    <div class="content">
+                        <p>Dear ${name},</p>
+                        
+                        <p>Thank you for completing the CNAMM Quick Assessment on ${data.timestamp}. Below are your assessment results which provide insight into your organization's Cloud Native security maturity.</p>
+                        
+                        <div class="score-card">
+                            <h2 style="text-align: center; margin-bottom: 20px;">Overall Maturity Score</h2>
+                            <div class="overall-score ${scoreColorClass}">${data.overallMaturity}</div>
+                            <p style="text-align: center; color: #777;">out of 4.0</p>
+                        </div>
+                        
+                        <h2>Business Function Breakdown</h2>
+                        <p>Your scores across the 8 CNAMM business functions:</p>
+                `;
+                
+                // Add function scores
+                sortedFunctions.forEach(func => {
+                    const scorePercentage = (func.score / 4) * 100;
+                    html += `
+                        <div class="function-score">
+                            <div class="function-name">${func.name}</div>
+                            <div class="function-bar">
+                                <div class="function-progress" style="width: ${scorePercentage}%"></div>
+                            </div>
+                            <div>${func.score} / 4</div>
+                        </div>
+                    `;
+                });
+                
+                // Add recommendation based on overall score
+                html += `<div class="recommendation">`;
+                
+                if (parseFloat(data.overallMaturity) < 2) {
+                    html += `
+                        <h3>Recommendation</h3>
+                        <p>Your assessment indicates that your organization is in the early stages of Cloud Native security maturity. We recommend focusing on establishing foundational Cloud Native security controls and developing a formal strategy.</p>
+                        <p><strong>Key focus areas:</strong></p>
+                        <ul>
+                            <li>Develop a formal Cloud Native security strategy</li>
+                            <li>Implement basic security controls for your cloud infrastructure</li>
+                            <li>Establish foundational identity and access management practices</li>
+                        </ul>
+                    `;
+                } else if (parseFloat(data.overallMaturity) < 3) {
+                    html += `
+                        <h3>Recommendation</h3>
+                        <p>Your assessment indicates that your organization has established some Cloud Native security practices but has room for improvement. We recommend standardizing your Cloud Native security practices and implementing more automated controls.</p>
+                        <p><strong>Key focus areas:</strong></p>
+                        <ul>
+                            <li>Standardize security policies and practices across your Cloud Native environment</li>
+                            <li>Implement automated security validation and monitoring</li>
+                            <li>Enhance your supply chain security controls</li>
+                        </ul>
+                    `;
+                } else if (parseFloat(data.overallMaturity) < 3.5) {
+                    html += `
+                        <h3>Recommendation</h3>
+                        <p>Your assessment indicates that your organization has a mature Cloud Native security program. We recommend optimizing your existing security controls and focusing on advanced automation.</p>
+                        <p><strong>Key focus areas:</strong></p>
+                        <ul>
+                            <li>Implement continuous validation and real-time remediation</li>
+                            <li>Enhance security through advanced zero-trust approaches</li>
+                            <li>Develop comprehensive threat detection capabilities</li>
+                        </ul>
+                    `;
+                } else {
+                    html += `
+                        <h3>Recommendation</h3>
+                        <p>Your assessment indicates that your organization has a highly mature Cloud Native security program. We recommend focusing on innovation and leading-edge practices to stay ahead.</p>
+                        <p><strong>Key focus areas:</strong></p>
+                        <ul>
+                            <li>Implement innovative security automation and orchestration</li>
+                            <li>Develop advanced threat hunting capabilities</li>
+                            <li>Contribute to the community and industry best practices</li>
+                        </ul>
+                    `;
+                }
+                
+                html += `</div>`;
+                
+                // Add next steps section
+                html += `
+                    <h2>Next Steps</h2>
+                    <p>To gain deeper insights into your Cloud Native security posture and develop a comprehensive improvement plan:</p>
+                    <ol>
+                        <li>Download the full CNAMM Assessment Toolkit for a detailed evaluation</li>
+                        <li>Conduct a comprehensive assessment across all 24 practice areas</li>
+                        <li>Develop a strategic roadmap based on the detailed results</li>
+                    </ol>
+                    
+                    <p style="text-align: center; margin: 30px 0;">
+                        <a href="https://github.com/devsecflow/Cloud-Native-Assurance-Maturity-Model/raw/main/release/v1.1/CNAMM%20Assessment%20Toolkit%20v1.1.xlsx" class="btn">Download Full CNAMM Toolkit</a>
+                    </p>
+                    
+                    <div class="footer">
+                        <p>This assessment was conducted using the <a href="https://devsecflow.github.io/cnamm/">Cloud Native Assurance Maturity Model</a>.</p>
+                        <p>&copy; 2025 DevSecFlow Community. All Rights Reserved.</p>
+                    </div>
+                </div>
+                </body>
+                </html>
+                `;
+                
+                return html;
+            }
+            
+            // Helper function to determine color class based on score
+            function getScoreColorClass(score) {
+                if (score < 2) return 'score-1';
+                if (score < 3) return 'score-2';
+                if (score < 3.5) return 'score-3';
+                return 'score-4';
+            }
         });
     </script>
 </body>

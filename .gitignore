@@ -1,0 +1,15 @@
+# Environment and deployment files
+.env
+.env.local
+
+# Node.js dependencies
+node_modules/
+
+# Netlify local files
+.netlify/
+
+# Build and IDE files
+.DS_Store
+.vscode/
+.idea/
+
