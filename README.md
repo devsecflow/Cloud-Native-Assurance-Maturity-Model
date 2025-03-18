@@ -21,7 +21,7 @@ The Cloud Native Assurance Maturity Model (CNAMM) is a framework designed to hel
 
 - **[Interactive Website](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/)**: Explore the framework, take the quick assessment, and access all resources
 - **[Quick Assessment](https://devsecflow.github.io/Cloud-Native-Assurance-Maturity-Model/#assessment)**: Get an immediate overview of your Cloud Native security maturity in minutes
-  - **New Feature**: Receive your assessment results by email with detailed insights and recommendations
+  - **New Feature**: Receive your assessment results by email with detailed insights and recommendations powered by Supabase
 - **[Sample Assessment](tools/full-assessment/Sample-Assessment.xlsx)**: View a completed assessment with scorecard visualization
 - **[Full Toolkit](tools/full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx)**: Download the comprehensive assessment toolkit
 
@@ -86,7 +86,8 @@ This repository contains essential tools and documentation for implementing CNAM
 - **[CNAMM Assessment Toolkit v1.1.xlsx](tools/full-assessment/CNAMM-Assessment-Toolkit-v1.1.xlsx)**: Interactive assessment tool with comprehensive scoring system
 - **[CNAMM-Framework-Documentation-v1.1.pdf](CNAMM-Framework-Documentation-v1.1.pdf)**: Detailed guide covering framework fundamentals and implementation
 - **[Sample Assessment.xlsx](tools/full-assessment/Sample-Assessment.xlsx)**: Example of a completed assessment with visualizations
-- **[Email Setup Guide](docs/guides/email-setup.md)**: Documentation for setting up the assessment results email functionality
+- **[Supabase Integration](supabase/)**: Serverless functions and database schema for email delivery
+- **[Resend Setup Guide](docs/guides/resend-setup.md)**: Documentation for setting up email delivery with Resend
 
 ## Getting Started
 
