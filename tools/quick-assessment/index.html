@@ -6,6 +6,8 @@
     <title>CNAMM Quick Assessment</title>
     <!-- Add Chart.js for visualizations -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Add Supabase JS client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             /* Match main site's more subdued colors */
@@ -746,6 +748,11 @@
     </div>
 
     <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://ajscxwmhsfvfdhxunsrs.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqc2N4d21oc2Z2ZmRoeHVuc3JzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIzMzAxNTcsImV4cCI6MjA1NzkwNjE1N30.cWNd17bGQsRjrzaZ5xS8xVTb6V6y69360w3h5Zpsjno';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Variables to track state
             let currentSection = 1;
@@ -939,25 +946,23 @@
                 });
             }
             
-            // Send anonymous assessment results to server
-            function saveAssessmentResults(results) {
+            // Save anonymous assessment results to Supabase
+            async function saveAssessmentResults(results) {
                 // Add timestamp to results
                 results.timestamp = new Date().toISOString();
                 
-                // Create a simple form data object to submit anonymously
-                const formData = new FormData();
-                formData.append('assessmentData', JSON.stringify(results));
-                
-                // Use the Fetch API to send the data to Formspree
-                fetch('https://formspree.io/f/mkgjgyvr', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
+                try {
+                    // Store data in Supabase
+                    const { data, error } = await supabase
+                        .from('assessment_results')
+                        .insert([results]);
+                    
+                    if (error) {
+                        console.error('Error saving assessment data:', error);
                     }
-                }).catch(error => {
-                    console.log('Error saving assessment data:', error);
-                });
+                } catch (err) {
+                    console.error('Error in Supabase operation:', err);
+                }
             }
             
             // Submit assessment
@@ -1094,7 +1099,7 @@
             updateProgress();
             
             // Email results form handling
-            document.getElementById('email-form').addEventListener('submit', function(e) {
+            document.getElementById('email-form').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 const email = document.getElementById('email-input').value;
@@ -1108,21 +1113,23 @@
                 // Generate HTML email content
                 const emailHtml = generateEmailHtml(name);
                 
-                // Send via our API endpoint
-                fetch('/api/send-results', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        name: name,
-                        assessmentResults: window.assessmentData,
-                        htmlContent: emailHtml
-                    })
-                })
-                .then(response => response.json())
-                .then(function() {
+                try {
+                    // Store email request in Supabase
+                    const { data, error } = await supabase
+                        .from('email_requests')
+                        .insert([{
+                            email: email,
+                            name: name,
+                            assessment_data: window.assessmentData,
+                            html_content: emailHtml,
+                            created_at: new Date().toISOString()
+                        }]);
+                    
+                    if (error) {
+                        throw error;
+                    }
+                    
+                    // Success message
                     statusDiv.innerHTML = '<p style="color: var(--secondary);">Success! Your assessment results have been sent to your email.</p>';
                     document.getElementById('email-input').value = '';
                     document.getElementById('name-input').value = '';
@@ -1132,11 +1139,11 @@
                         document.getElementById('email-form').style.display = 'none';
                         statusDiv.innerHTML += '<p>You can now close this message.</p>';
                     }, 3000);
-                })
-                .catch(function(error) {
-                    console.error("Email sending failed:", error);
+                    
+                } catch (error) {
+                    console.error("Email request failed:", error);
                     statusDiv.innerHTML = '<p style="color: #e53935;">Sorry, we couldn\'t send your results. Please try again later.</p>';
-                });
+                }
             });
             
             // Function to generate nicely formatted HTML email

@@ -1,0 +1,9 @@
+{
+  "crons": [
+    {
+      "name": "process-email-queue",
+      "schedule": "*/5 * * * *",
+      "command": "curl -X POST -H 'Authorization: Bearer $FUNCTION_SECRET' $SUPABASE_URL/functions/v1/send-email"
+    }
+  ]
+}
