@@ -35,7 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial release of the Cloud Native Assurance Maturity Model
-- Core framework with 6 dimensions and 24 practice areas
+- Core framework with 8 business functions and 24 practice areas
+- Two assessment streams (Core and Advanced)
 - Assessment toolkit (Excel-based)
 - Quick assessment web tool
 - Comprehensive documentation
